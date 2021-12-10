@@ -1,26 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Dimensions, TextInput } from "react-native";
-import Coin from "../../assets/data/crypto.json";
+import { View, Text, Dimensions, TextInput, ActivityIndicator } from "react-native";
+// import Coin from "../../assets/data/crypto.json";
 import CoinDetailedHeader from "../../components/CoinDetailedHeader";
+import { useRoute } from "@react-navigation/native";
+import { getDetailedCoinData, getCoinMarketChart } from '../../services/requests'
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import { ChartPathProvider, ChartPath, ChartDot, ChartYLabel } from "@rainbow-me/animated-charts";
 
 const CoinDetailedScreen = () => {
+  const [coin, setCoin] = useState(null);
+  const [coinMarketData, setCoinMarketData] = useState(null);
+  const route = useRoute();
+  const {params: { coinId }} = route;
+
+  const [loading, setLoading] = useState(false);
+  const [coinValue, setCoinValue] = useState("1");
+  const [usdValue, setUsdValue] = useState("");
+
+  const fetchCoinData = async () => {
+    setLoading(true);
+    const fetchedCoinData = await getDetailedCoinData(coinId);
+    const fetchedCoinMarketData = await getCoinMarketChart(coinId);
+    setCoin(fetchedCoinData);
+    setCoinMarketData(fetchedCoinMarketData);
+    setUsdValue(fetchedCoinData.market_data.current_price.usd.toString())
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchCoinData()
+  }, [])
+
+  if (loading || !coin || !coinMarketData) {
+    return <ActivityIndicator size="large" />
+  }
+
   const {
+    id,
     image: { small },
     name,
     symbol,
-    prices,
     market_data: {
       market_cap_rank,
       current_price,
       price_change_percentage_24h,
     },
-  } = Coin;
+  } = coin;
 
-  const [coinValue, setCoinValue] = useState("1");
-  const [usdValue, setUsdValue] = useState(current_price.usd.toString());
+  const { prices } = coinMarketData;
 
   const percentageColor =
     price_change_percentage_24h < 0 ? "#ea3943" : "#16c784";
@@ -58,6 +86,7 @@ const CoinDetailedScreen = () => {
         }}
       >
         <CoinDetailedHeader
+          coinId={id}
           image={small}
           symbol={symbol}
           marketCapRank={market_cap_rank}
