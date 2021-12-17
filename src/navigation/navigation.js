@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import CoinDetailedScreen from "../screens/CoinDetailedScreen";
+import AddNewAssetsScreen from "../screens/AddNewAssetsScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 
 const Stack = createStackNavigator();
@@ -21,6 +22,7 @@ const RootNavigation = () => {
     >
       <Stack.Navigator initialRouteName="Root" screenOptions={screenOptions}>
         <Stack.Screen name="CoinDetailedScreen" component={CoinDetailedScreen} />
+        <Stack.Screen name="AddNewAssetsScreen" component={AddNewAssetsScreen} />
         <Stack.Screen name="Root" component={BottomTabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
