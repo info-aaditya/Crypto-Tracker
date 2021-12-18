@@ -11,12 +11,15 @@ const styles = StyleSheet.create({
   imageView: {
     height: 30,
     width: 30,
+    marginRight: 10,
+    alignSelf: "center",
   },
 
   title: {
     color: 'white',
     fontSize: 17,
     fontWeight: 'bold',
+    alignSelf: 'flex-end',
   },
 
   ticker: {
@@ -35,7 +38,6 @@ const styles = StyleSheet.create({
   },
   
   percentageChange: {
-    color: '#16c784',
     fontSize: 18,
     fontWeight: '500',
   },

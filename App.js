@@ -3,14 +3,17 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import RootNavigation from './src/navigation/navigation';
 import WatchlistProvider from "./src/Contexts/WatchlistContext";
+import { RecoilRoot } from 'recoil';
 
 export default function App() {
   return (
   <View style={styles.container}>
-    <WatchlistProvider>
-      <RootNavigation />
-    <StatusBar style="light" />
-    </WatchlistProvider>
+    <RecoilRoot>
+      <WatchlistProvider>
+        <RootNavigation />
+      <StatusBar style="light" />
+      </WatchlistProvider>
+    </RecoilRoot>
   </View>
   );
 }

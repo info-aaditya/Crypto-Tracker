@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-
+  
   // Balance Container
   balanceContainer: {
     flexDirection: "row",
@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   },
 
   valueChange: {
-    color: "#16c784",
     fontSize: 19,
     fontWeight: '600',
     letterSpacing: 0.25,
@@ -35,7 +34,6 @@ const styles = StyleSheet.create({
   // Percentage Container
   percentageContainer: {
     flexDirection: "row",
-    backgroundColor: "#16c784",
     paddingHorizontal: 5,
     paddingVertical: 8,
     borderRadius: 5,
