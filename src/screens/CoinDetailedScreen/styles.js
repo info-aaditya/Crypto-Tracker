@@ -43,6 +43,15 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
+  filtersContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#2B2B2B',
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginVertical: 10
+  },
+
   rateContainer: {
     flexDirection: "row"
   },

@@ -1,15 +1,20 @@
 import React from 'react'
 import { View, Text, FlatList, Pressable } from 'react-native'
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import PortfolioAssetsItem from "../PortfolioAssetsItem";
 import { useNavigation } from '@react-navigation/native';
-import { useRecoilValue } from 'recoil';
-import { allPortfolioAssets } from '../../../atoms/PortfolioAssets/PortfolioAssets';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { allPortfolioAssets, allPortfolioBoughtAssetsInStorage } from '../../../atoms/PortfolioAssets/PortfolioAssets';
+import { SwipeListView } from "react-native-swipe-list-view";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from './styles';
 
 const PortfolioAssetsList = () => {
   const navigation = useNavigation();
   const assets = useRecoilValue(allPortfolioAssets);
+  const [storageAssets, setStorageAssets] = useRecoilState(
+    allPortfolioBoughtAssetsInStorage
+  );
 
   const getCurrentBalance = () =>
   assets.reduce(
@@ -41,12 +46,35 @@ const getCurrentPercentageChange = () => {
   );
 };
 
+const onDeleteAsset = async (asset) => {
+  const newAssets = storageAssets.filter((coin) => coin.unique_id !== asset.item.unique_id)
+  const jsonValue = JSON.stringify(newAssets);
+  await AsyncStorage.setItem("@portfolio_coins", jsonValue)
+  setStorageAssets(newAssets);
+};
+
+const renderDeleteButton = (data) => {
+  return (
+    <Pressable
+      style={styles.deleteButton}
+      onPress={() => onDeleteAsset(data)}
+    >
+      <FontAwesome name="trash-o" size={24} color="white" />
+    </Pressable>
+  );
+};
+
 const isChangePositive = () => getCurrentValueChange() >= 0;
   
   return (
-    <FlatList 
+    <SwipeListView
       data={assets}
-      renderItem={({item}) => <PortfolioAssetsItem  assetItem={item}/>}
+      renderItem={({item}) => <PortfolioAssetsItem assetItem={item}/>}
+      rightOpenValue={-75}
+      disableRightSwipe
+      closeOnRowPress
+      keyExtractor={({id}, index) => `${id}${index}`}
+      renderHiddenItem={(data) => renderDeleteButton(data)}
       ListHeaderComponent={
         <>
         <View style={styles.balanceContainer}>

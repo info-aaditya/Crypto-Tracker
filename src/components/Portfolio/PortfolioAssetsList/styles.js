@@ -73,6 +73,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+
+  // Delete Button
+  deleteButton: {
+    flex: 1,
+    backgroundColor: "#EA3943",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingRight: 30,
+    marginLeft: 20,
+  },
   
 });
 
