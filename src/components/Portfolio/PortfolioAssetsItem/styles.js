@@ -6,6 +6,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     padding: 15,
+    backgroundColor: "#121212",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#282828",
   },
 
   imageView: {
@@ -27,7 +30,12 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
 
-  // Percentage Container
+  // Percentage Change Container
+  percentageChangeContainer: {
+    marginLeft: 'auto',
+    alignItems: 'flex-end',
+  },
+
   percentageContainer: {
     flexDirection: "row",
   },

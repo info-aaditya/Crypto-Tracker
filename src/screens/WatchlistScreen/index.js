@@ -3,6 +3,7 @@ import { View, Text, FlatList, RefreshControl } from 'react-native';
 import { useWatchlist } from '../../Contexts/WatchlistContext';
 import CoinItem from '../../components/CoinItem';
 import { getWatchlistedCoins } from '../../services/requests';
+import styles from './styles';
 
 const WatchlistScreen = () => {
   const {watchlistCoinIds} = useWatchlist();
@@ -23,21 +24,26 @@ const WatchlistScreen = () => {
   };
 
   useEffect(() => {
-    fetchWatchlistedCoins();
+    if (watchlistCoinIds.length > 0) {
+      fetchWatchlistedCoins();
+    }
   }, [watchlistCoinIds]);
 
   return (
-    <FlatList 
-      data={coins}
-      renderItem={({ item }) => <CoinItem marketCoin={item} />}
-      refreshControl={
-        <RefreshControl 
-          refreshing={loading}
-          tintColor="white"
-          onRefresh={fetchWatchlistedCoins}
-        />
-      }
-    />
+    <View>
+    <Text style={styles.headerText}>Watchlist Crypto Assets</Text>
+      <FlatList 
+        data={coins}
+        renderItem={({ item }) => <CoinItem marketCoin={item} />}
+        refreshControl={
+          <RefreshControl 
+            refreshing={loading}
+            tintColor="white"
+            onRefresh={fetchWatchlistedCoins}
+          />
+        }
+      />
+    </View>
   )
 };
 

@@ -20,8 +20,8 @@ const PortfolioAssetsItem = ({ assetItem }) => {
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.ticker}>{ticker}</Text>
       </View>
-      <View style={{marginLeft: 'auto'}}>
-        <Text style={styles.title}>{currentPrice}</Text>
+      <View style={styles.percentageChangeContainer}>
+        <Text style={styles.title}>${currentPrice}</Text>
           <View style={styles.percentageContainer}>
             <AntDesign
               name={isChangePositive() ? "caretup" : "caretdown"}
@@ -32,11 +32,11 @@ const PortfolioAssetsItem = ({ assetItem }) => {
             <Text 
               style={[{
                 color: isChangePositive() ? "#16c784" : "#ea3943",
-              },styles.percentageChange]}>{priceChangePercentage.toFixed(2)}</Text>
+              },styles.percentageChange]}>{priceChangePercentage?.toFixed(2)}</Text>
           </View>
       </View>
       <View style={styles.quantityContainer}>
-        <Text style={styles.title}>{renderHoldings()}</Text>
+        <Text style={styles.title}>${renderHoldings()}</Text>
         <Text style={styles.ticker}>{quantityBought} {ticker}</Text>
       </View>
     </View>
